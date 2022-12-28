@@ -7,39 +7,28 @@ const char* INPUT_PATH = "inputs/Day1.txt";
 
 int main() {
     std::ifstream file;
-    std::vector<int> lines;
 
     file.open(INPUT_PATH);
 
     std::string line;
-
+    int curNum = 0;
+    unsigned int biggestNum = 0;
+    
     if (file.is_open()) {
         while (file) {
             std::getline(file, line);
             if (line != "") {
-                lines.push_back(std::stoi(line));
+                curNum += std::stoi(line);
             } else {
-                lines.push_back(-1);
+                if (curNum >= biggestNum) {
+                    biggestNum = curNum;
+                }
+                curNum = 0;
             }
         }
     } else {
-        std::cout << "couldn't open file";
+        std::cout << "ERROR: Couldn't open file.";
         return 0;
-    }
-    std::cout << lines.size() << std::endl;
-
-    int cur = 0;
-    unsigned int biggestNum = 0;
-    for (int i = 0; i < lines.size(); i++) {
-        if (lines[i] != -1) {
-            cur += lines[i];
-        } else {
-            std::cout << cur << std::endl;
-            if (cur >= biggestNum) {
-                biggestNum = cur;
-            }
-            cur = 0;
-        }
     }
 
     std::cout << biggestNum;
